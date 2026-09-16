@@ -1,0 +1,171 @@
+@import 'tailwindcss';
+
+/*
+ * Theme tokens.
+ *
+ * Both themes are defined in terms of the same names so every component styles
+ * itself once. The dark palette is not an inversion: text drops to a warm
+ * off-white rather than pure white, which is what stops long source documents
+ * vibrating on an OLED screen.
+ */
+@theme {
+  --color-canvas: #fbfbfa;
+  --color-surface: #ffffff;
+  --color-surface-2: #f4f4f2;
+  --color-line: #e4e4e0;
+  --color-ink: #17171a;
+  --color-ink-soft: #5c5c66;
+  --color-ink-faint: #8a8a94;
+  --color-accent: #2f5fdd;
+  --color-accent-soft: #e8eeff;
+  --color-good: #17795e;
+  --color-good-soft: #e2f4ee;
+  --color-bad: #b02a37;
+  --color-bad-soft: #fceced;
+  --color-warn: #8a5a00;
+  --color-warn-soft: #fdf3dd;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --color-canvas: #0e0e11;
+    --color-surface: #16161a;
+    --color-surface-2: #1e1e24;
+    --color-line: #2c2c34;
+    --color-ink: #ececef;
+    --color-ink-soft: #a6a6b2;
+    --color-ink-faint: #75757f;
+    --color-accent: #7ea2ff;
+    --color-accent-soft: #1c2440;
+    --color-good: #5ed6ad;
+    --color-good-soft: #13302a;
+    --color-bad: #ff8b93;
+    --color-bad-soft: #351a1e;
+    --color-warn: #f0c46a;
+    --color-warn-soft: #332a12;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      color-scheme: dark;
+      --color-canvas: #0e0e11;
+      --color-surface: #16161a;
+      --color-surface-2: #1e1e24;
+      --color-line: #2c2c34;
+      --color-ink: #ececef;
+      --color-ink-soft: #a6a6b2;
+      --color-ink-faint: #75757f;
+      --color-accent: #7ea2ff;
+      --color-accent-soft: #1c2440;
+      --color-good: #5ed6ad;
+      --color-good-soft: #13302a;
+      --color-bad: #ff8b93;
+      --color-bad-soft: #351a1e;
+      --color-warn: #f0c46a;
+      --color-warn-soft: #332a12;
+    }
+  }
+
+  html {
+    background: var(--color-canvas);
+  }
+
+  body {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-accent-soft);
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  .cg-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+  }
+
+  .cg-input {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    color: var(--color-ink);
+    border-radius: 8px;
+    padding: 0.55rem 0.7rem;
+    width: 100%;
+    font-size: 0.875rem;
+  }
+
+  .cg-input::placeholder {
+    color: var(--color-ink-faint);
+  }
+
+  .cg-btn {
+    border-radius: 8px;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface-2);
+    color: var(--color-ink);
+    transition: filter 120ms ease, opacity 120ms ease;
+  }
+
+  .cg-btn:hover:not(:disabled) {
+    filter: brightness(0.97);
+  }
+
+  .cg-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .cg-btn-primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+
+  :root[data-theme='dark'] .cg-btn-primary {
+    color: #0e0e11;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .cg-btn-primary {
+      color: #0e0e11;
+    }
+  }
+}
+
+/* The struck-through treatment for a sentence that failed verification. */
+.cg-struck {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: var(--color-bad);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
